@@ -13,7 +13,7 @@
 
 **End-to-end ML forecasting system for 1,115 retail stores · 42-day horizon · Uncertainty-aware inventory optimisation**
 
-[🚀 Live Demo](https://your-app.streamlit.app) · [📓 Open in Colab](https://colab.research.google.com/github/yourusername/retailsense/blob/main/notebooks/retailsense_forecasting.ipynb) · [📊 Dataset](https://www.kaggle.com/c/rossmann-store-sales)
+[🚀 Live Demo](https://retailsenseforecasting-e98ftqdmbnmjhgd9nkfxfo.streamlit.app/) · [📓 Open in Colab](https://colab.research.google.com/drive/1HMT69nAoBTDVxB9WiIg5uqnyRnUwZG42?usp=sharing) · [📊 Dataset](https://www.kaggle.com/c/rossmann-store-sales)
 
 </div>
 

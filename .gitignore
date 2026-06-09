@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Kaggle credentials
+kaggle.json
+
+# Temporary exports
+retailsense_artifacts.zip

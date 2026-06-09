@@ -1,0 +1,8 @@
+{
+  "unit_cost": 8.0,
+  "selling_price": 15.0,
+  "holding_cost_rate": 0.2,
+  "stockout_penalty": 5.0,
+  "critical_ratio": 0.9996348365893737,
+  "savings_pct": 76.4857283264218
+}

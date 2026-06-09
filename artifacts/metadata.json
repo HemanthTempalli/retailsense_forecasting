@@ -1,0 +1,89 @@
+{
+  "best_model": "LightGBM (baseline)",
+  "rmspe": 0.12587616935640752,
+  "mae": 622.4311080061639,
+  "feature_cols": [
+    "Store",
+    "DayOfWeek",
+    "Promo",
+    "StateHoliday",
+    "SchoolHoliday",
+    "StoreType",
+    "Assortment",
+    "CompetitionDistance",
+    "CompetitionAge",
+    "Promo2",
+    "Promo2Active",
+    "Year",
+    "Month",
+    "Day",
+    "WeekOfYear",
+    "Quarter",
+    "IsWeekend",
+    "IsMonthStart",
+    "IsMonthEnd",
+    "sin_week",
+    "cos_week",
+    "sin_year",
+    "cos_year",
+    "sin_month",
+    "cos_month",
+    "Sales_lag_7",
+    "Sales_lag_14",
+    "Sales_lag_28",
+    "Sales_lag_56",
+    "Sales_roll_mean_7",
+    "Sales_roll_std_7",
+    "Sales_roll_max_7",
+    "Sales_roll_mean_14",
+    "Sales_roll_std_14",
+    "Sales_roll_max_14",
+    "Sales_roll_mean_28",
+    "Sales_roll_std_28",
+    "Sales_roll_max_28",
+    "Sales_expanding_mean"
+  ],
+  "cutoff_date": "2015-06-19",
+  "val_start": "2015-06-20",
+  "val_end": "2015-07-31",
+  "n_stores": 1115,
+  "pi_coverage": 0.7277444019661388,
+  "best_params": {
+    "n_estimators": 350,
+    "learning_rate": 0.10985745201142037,
+    "num_leaves": 102,
+    "max_depth": 6,
+    "subsample": 0.6624074561769746,
+    "colsample_bytree": 0.662397808134481,
+    "reg_alpha": 0.00019517224641449495,
+    "reg_lambda": 2.1423021757741068,
+    "min_child_samples": 34
+  },
+  "model_results": [
+    {
+      "model": "LightGBM (baseline)",
+      "RMSPE": 0.12587616935640752,
+      "MAE": 622.4311080061639
+    },
+    {
+      "model": "LightGBM (Optuna tuned)",
+      "RMSPE": 0.1273087887699134,
+      "MAE": 629.7075563650407
+    },
+    {
+      "model": "Stacking Ensemble (final)",
+      "RMSPE": 0.1284021411718654,
+      "MAE": 643.3968321330182
+    },
+    {
+      "model": "XGBoost (baseline)",
+      "RMSPE": 0.13474696946592998,
+      "MAE": 644.6948852539062
+    },
+    {
+      "model": "Prophet (top-10 stores)",
+      "RMSPE": 0.17528552898980632,
+      "MAE": 2531.215050898536
+    }
+  ]
+}

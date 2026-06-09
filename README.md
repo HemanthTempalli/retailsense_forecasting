@@ -26,6 +26,7 @@ RetailSense is a **production-grade demand forecasting platform** built on the [
 The system solves a real supply-chain problem: **how many units should a retail store order each day to minimise total inventory cost** (overstock waste + stockout lost revenue)?
 
 Rather than just producing a point forecast, RetailSense:
+
 - Quantifies **forecast uncertainty** via quantile regression (p10/p50/p90)
 - Translates uncertainty into **optimal order quantities** using the Newsvendor model
 - Explains every prediction with **SHAP waterfall plots**
@@ -141,12 +142,14 @@ retailsense/
 ## ✨ Features
 
 ### 📈 Forecast Dashboard
+
 - Interactive store selector (1–1,115 stores)
 - 42-day forecast with **80% prediction interval** (p10–p90 shaded band)
 - Day-of-week demand pattern chart
 - Full forecast table with per-day error %
 
 ### 📦 Inventory Optimizer
+
 - **Newsvendor model** computes optimal order quantity from forecast distribution
 - Cost parameter controls: unit cost, selling price, holding rate, stockout penalty
 - Live **cost curve** showing overstock vs understock tradeoff
@@ -154,12 +157,14 @@ retailsense/
 - Business impact: naive vs optimised ordering cost comparison
 
 ### 🔍 Model Explainability
+
 - **Global SHAP feature importance** (top 20 features, colour-coded by type)
 - **Beeswarm scatter plot** — each dot is one prediction, coloured by feature value
 - **Waterfall plot** — step-by-step explanation of any individual prediction
 - Feature group legend: lag/rolling · seasonality · promotions · store/competition
 
 ### 🔬 What-If Simulator
+
 - Real-time forecast update on toggle of: Promo, State Holiday, School Holiday, Promo2
 - **Scenario comparison bar chart** — isolates the effect of each condition individually
 - Day-of-week sweep: forecast across Mon–Sun under current conditions
@@ -188,9 +193,10 @@ pip install -r requirements.txt
 
 Open the notebook in Google Colab:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yourusername/retailsense/blob/main/notebooks/retailsense_forecasting.ipynb)
+[![Open In Colab](https://colab.research.google.com/drive/1HMT69nAoBTDVxB9WiIg5uqnyRnUwZG42?usp=sharing)
 
 **Setup (one-time):**
+
 1. Go to [Kaggle Account Settings](https://www.kaggle.com/settings) → API → Create New Token → download `kaggle.json`
 2. Run the notebook — it will prompt you to upload `kaggle.json`
 3. The notebook auto-downloads the dataset, trains all models, and exports a `retailsense_artifacts.zip`
@@ -225,28 +231,28 @@ Open [http://localhost:8501](http://localhost:8501)
 
 ### Model Leaderboard
 
-| Model | RMSPE ↓ | MAE (€) ↓ | Notes |
-|---|---|---|---|
-| 🥇 **Stacking Ensemble** | **0.1124** | **€612** | XGB + LGB → Ridge meta-learner |
-| 🥈 LightGBM (Optuna tuned) | 0.1187 | €638 | 25 Optuna trials, walk-forward CV |
-| 🥉 XGBoost (baseline) | 0.1341 | €724 | 300 trees, hist method |
-| Prophet (top-10 stores) | 0.1602 | €891 | Multiplicative seasonality |
-| Kaggle median baseline | ~0.148 | — | Public leaderboard reference |
+| Model                      | RMSPE ↓    | MAE (€) ↓ | Notes                             |
+| -------------------------- | ---------- | --------- | --------------------------------- |
+| 🥇 **Stacking Ensemble**   | **0.1124** | **€612**  | XGB + LGB → Ridge meta-learner    |
+| 🥈 LightGBM (Optuna tuned) | 0.1187     | €638      | 25 Optuna trials, walk-forward CV |
+| 🥉 XGBoost (baseline)      | 0.1341     | €724      | 300 trees, hist method            |
+| Prophet (top-10 stores)    | 0.1602     | €891      | Multiplicative seasonality        |
+| Kaggle median baseline     | ~0.148     | —         | Public leaderboard reference      |
 
 ### Quantile Model Quality
 
-| Metric | Value |
-|---|---|
-| PI Coverage (p10–p90) | ~81% (target: 80%) |
-| Avg PI Width | €1,340 / day |
-| Calibration | Well-calibrated (coverage ≈ nominal) |
+| Metric                | Value                                |
+| --------------------- | ------------------------------------ |
+| PI Coverage (p10–p90) | ~81% (target: 80%)                   |
+| Avg PI Width          | €1,340 / day                         |
+| Calibration           | Well-calibrated (coverage ≈ nominal) |
 
 ### Business Impact
 
-| Policy | 42-day Cost (sample 50 stores) |
-|---|---|
-| Naive (order p50 × 0.95) | Baseline |
-| Intelligent (newsvendor p80) | **~17% lower** |
+| Policy                       | 42-day Cost (sample 50 stores) |
+| ---------------------------- | ------------------------------ |
+| Naive (order p50 × 0.95)     | Baseline                       |
+| Intelligent (newsvendor p80) | **~17% lower**                 |
 
 ---
 
@@ -281,6 +287,7 @@ This directly optimises for interval coverage rather than assuming normality.
 ### Why the Newsvendor Model?
 
 The newsvendor model computes the **cost-optimal order quantity** given:
+
 - Overage cost (Co): cost of ordering one unit too many
 - Underage cost (Cu): cost of being one unit short
 
@@ -291,6 +298,7 @@ With holding cost €0.0044/unit/day and stockout cost €12/unit, q\* ≈ 0.999
 ### Why LightGBM Over XGBoost as the Primary Model?
 
 On the full Rossmann dataset (~900K training rows):
+
 - LightGBM trains **~3× faster** due to leaf-wise growth + histogram binning
 - Handles the large number of lag/rolling features more efficiently
 - Supports quantile loss natively (no custom objective needed)
@@ -304,22 +312,22 @@ XGBoost contributes complementary signal in the stacking ensemble due to differe
 
 **Rossmann Store Sales** — [Kaggle Competition](https://www.kaggle.com/c/rossmann-store-sales)
 
-| File | Rows | Columns | Description |
-|---|---|---|---|
-| train.csv | 1,017,209 | 9 | Daily sales per store, 2013–2015 |
-| store.csv | 1,115 | 10 | Store metadata (type, competition, promo) |
+| File      | Rows      | Columns | Description                               |
+| --------- | --------- | ------- | ----------------------------------------- |
+| train.csv | 1,017,209 | 9       | Daily sales per store, 2013–2015          |
+| store.csv | 1,115     | 10      | Store metadata (type, competition, promo) |
 
 **Key columns used:**
 
-| Column | Type | Description |
-|---|---|---|
-| Sales | Target (int) | Daily turnover in € |
-| Promo | Binary | Short-term promotion active |
-| StateHoliday | Categorical | Public holiday type |
-| StoreType | Categorical | 4 store archetypes (a/b/c/d) |
-| Assortment | Categorical | Product range level |
-| CompetitionDistance | Continuous | Metres to nearest competitor |
-| DayOfWeek | Ordinal | 1=Monday … 7=Sunday |
+| Column              | Type         | Description                  |
+| ------------------- | ------------ | ---------------------------- |
+| Sales               | Target (int) | Daily turnover in €          |
+| Promo               | Binary       | Short-term promotion active  |
+| StateHoliday        | Categorical  | Public holiday type          |
+| StoreType           | Categorical  | 4 store archetypes (a/b/c/d) |
+| Assortment          | Categorical  | Product range level          |
+| CompetitionDistance | Continuous   | Metres to nearest competitor |
+| DayOfWeek           | Ordinal      | 1=Monday … 7=Sunday          |
 
 ---
 
@@ -343,19 +351,19 @@ pytest tests/test_inventory.py -v
 
 ## 🛠️ Environment Details
 
-| Component | Version |
-|---|---|
-| Python | 3.10+ |
-| LightGBM | 4.3.0 |
-| XGBoost | 2.0.3 |
-| Prophet | 1.1.5 |
-| Optuna | 3.6.1 |
-| SHAP | 0.45.1 |
-| Streamlit | 1.35.0 |
-| Colab | Free Tier (CPU) |
-| Peak RAM | ~3.5 GB |
-| GPU | Not required |
-| Notebook runtime | ~12 min |
+| Component        | Version         |
+| ---------------- | --------------- |
+| Python           | 3.10+           |
+| LightGBM         | 4.3.0           |
+| XGBoost          | 2.0.3           |
+| Prophet          | 1.1.5           |
+| Optuna           | 3.6.1           |
+| SHAP             | 0.45.1          |
+| Streamlit        | 1.35.0          |
+| Colab            | Free Tier (CPU) |
+| Peak RAM         | ~3.5 GB         |
+| GPU              | Not required    |
+| Notebook runtime | ~12 min         |
 
 ---
 
@@ -364,9 +372,9 @@ pytest tests/test_inventory.py -v
 - **LightGBM:** Ke et al. (2017). [LightGBM: A Highly Efficient Gradient Boosting Decision Tree](https://papers.nips.cc/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html). NeurIPS.
 - **Prophet:** Taylor & Letham (2018). [Forecasting at Scale](https://peerj.com/preprints/3190/). The American Statistician.
 - **SHAP:** Lundberg & Lee (2017). [A Unified Approach to Interpreting Model Predictions](https://arxiv.org/abs/1705.07874). NeurIPS.
-- **Newsvendor Model:** Porteus (1990). Stochastic Inventory Theory. In *Handbooks in OR & MS*.
+- **Newsvendor Model:** Porteus (1990). Stochastic Inventory Theory. In _Handbooks in OR & MS_.
 - **Optuna:** Akiba et al. (2019). [Optuna: A Next-generation Hyperparameter Optimization Framework](https://arxiv.org/abs/1907.10902). KDD.
-- **Quantile Regression:** Koenker & Bassett (1978). Regression Quantiles. *Econometrica*.
+- **Quantile Regression:** Koenker & Bassett (1978). Regression Quantiles. _Econometrica_.
 
 ---
 
@@ -374,10 +382,7 @@ pytest tests/test_inventory.py -v
 
 **Hemanth Tempalli**
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin)](https://linkedin.com/in/yourprofile)
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat&logo=github)](https://github.com/HemanthTempalli)
-
-*Also see:* [**credit-risk-platform**](https://github.com/HemanthTempalli/credit-risk-platform) — LightGBM + SHAP credit scoring system with Streamlit deployment
+_Also see:_ [**credit-risk-platform**](https://github.com/HemanthTempalli/credit-risk-platform) — LightGBM + SHAP credit scoring system with Streamlit deployment
 
 ---
 

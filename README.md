@@ -32,7 +32,7 @@ Rather than just producing a point forecast, RetailSense:
 - Explains every prediction with **SHAP waterfall plots**
 - Lets business users **simulate what-if scenarios** (toggle promotions, holidays, competition)
 
-> **Resume talking point:** Achieves RMSPE of ~0.112 on the validation set, beating the Kaggle public leaderboard median baseline of ~0.148 — a **24% improvement** using walk-forward CV, Optuna tuning, and a stacking ensemble.
+>
 
 ---
 
